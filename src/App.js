@@ -40,6 +40,8 @@ function App() {
       </div>
 
       <Modal />
+      <Modal />
+      <Modal />
     
     </div>
   );
