@@ -40,11 +40,6 @@ function App() {
       </div>
 
       <Modal />
-<<<<<<< HEAD
-=======
-      <Modal />
-      <Modal />
->>>>>>> coupon
       <p>2월 23일 발행</p>
     </div>
   );
