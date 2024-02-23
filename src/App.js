@@ -42,7 +42,7 @@ function App() {
       <Modal />
       <Modal />
       <Modal />
-    
+      <p>2월 23일 발행</p>
     </div>
   );
 }
