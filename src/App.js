@@ -6,6 +6,8 @@ import { useState } from 'react';
 function App() {
   const [course, setCourse] = useState(["React 강좌", "JavaScipt 강좌", "CSS 강좌"]);
   const [good,setGood] = useState(0);
+  const [goodArray,setGoodArray] = useState([0, 0, 0]);
+  let [modal, setModal] = useState(false);
 
   function ChangeCourse () {
     let newCourse = [...course];
@@ -13,35 +15,33 @@ function App() {
     setCourse( newCourse );
   }
 
+  console.log(goodArray[0]);
+
   return (
     <div className="App">
       <div className="black-nav">
         <div>개발 Blog</div>
       </div>
 
+      {
+        course.map((a, i)=>{
+          return(
+            <div className='list' key={i}>
+              <h3 onClick={()=>{setModal(!modal)}}> { course[i] } <span onClick={ ()=>{ setGoodArray(++goodArray[i]); } }>👍 {goodArray[i]}</span>  </h3>
+              <p>2월 17일 발행</p>
+              <hr/>
+            </div>
+          )})
+      }
+
       <button onClick={ ChangeCourse }>버튼</button>
 
-      <div className='list'>
-        <h3> { course[0] } <span onClick={ ()=>{ setGood(good + 1) } }>👍 {good}</span>  </h3>
-        <p>2월 17일 발행</p>
-        <hr/>
-      </div>
+      
 
-      <div className='list'>
-        <h3> { course[1] }  </h3>
-        <p>2월 18일 발행</p>
-        <hr/>
-      </div>
+      {
+        modal === true ? <Modal/> : null
+      }
 
-      <div className='list'>
-        <h3> { course[2] }  </h3>
-        <p>2월 19일 발행</p>
-        <hr/>
-      </div>
-
-      <Modal />
-      <Modal />
-      <p>2월 23일 발행</p>
     </div>
   );
 }
