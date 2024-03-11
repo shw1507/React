@@ -5,17 +5,24 @@ import { useState } from 'react';
 
 function App() {
   const [course, setCourse] = useState(["React 강좌", "JavaScipt 강좌", "CSS 강좌"]);
-  const [good,setGood] = useState(0);
   const [goodArray,setGoodArray] = useState([0, 0, 0]);
-  let [modal, setModal] = useState(false);
+  const [modalArray, setModalArray] = useState([false, false, false]);
 
-  function ChangeCourse () {
+  function changeCourse () {
     let newCourse = [...course];
     newCourse[0] = "Html 강좌";
     setCourse( newCourse );
   }
 
-  console.log(goodArray[0]);
+  const increaseGoodArray = (index) => {
+    const newGoodArray = goodArray.map((number, idx) => idx === index ? number + 1 : number);
+    setGoodArray(newGoodArray); // 새로운 배열로 상태 업데이트
+  };
+
+  const screenModal = (index) => {
+    const newModalArray = modalArray.map((bool, idx) => idx === index ? !bool : bool);
+    setModalArray(newModalArray); // 새로운 배열로 상태 업데이트
+  };
 
   return (
     <div className="App">
@@ -27,31 +34,29 @@ function App() {
         course.map((a, i)=>{
           return(
             <div className='list' key={i}>
-              <h3 onClick={()=>{setModal(!modal)}}> { course[i] } <span onClick={ ()=>{ setGoodArray(++goodArray[i]); } }>👍 {goodArray[i]}</span>  </h3>
+              <h3 onClick={()=>screenModal(i)}> { course[i] } <span onClick={ (e)=>{ e.stopPropagation(); increaseGoodArray(i) } }>👍 {goodArray[i]}</span>  </h3>
               <p>2월 17일 발행</p>
               <hr/>
+              {
+                modalArray[i] === true ? <Modal title={course[i]} onChangeCourse = {changeCourse} /> : null
+              }
             </div>
           )})
       }
 
-      <button onClick={ ChangeCourse }>버튼</button>
-
       
-
-      {
-        modal === true ? <Modal/> : null
-      }
 
     </div>
   );
 }
 
-function Modal() {
+function Modal( {title, onChangeCourse} ) { 
   return(
     <div className='modal'>
-        <h2>제목</h2>
+        <h2>{title}</h2>
         <p>날짜</p>
-        <p>상세내용</p> 
+        <p>상세내용</p>
+        <button onClick={onChangeCourse}>글수정</button> 
     </div>
   )
 }
